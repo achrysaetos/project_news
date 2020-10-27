@@ -6,7 +6,7 @@ TO LAUNCH THE SITE:
 1. We crawl for headlines every hour -- run spiders in project_news_scraper
 2. We publish the headlines -- copy and push json files to project_news_file_hosting
 3. Users can access the headlines -- run "DEBUG=project_news:* npm run devstart" and go to http://localhost:3000
-**Eventually, we will be able to automate scraping and publishing, and users will be able to filter by keywords.**
+**Eventually, we will be able to automate scraping and securely publish, and users will be able to filter by keywords.**
 
 IMPORTANT: run "npm install" in terminal
 npm install consolidate and swig to avoid using pug as the templating engine
