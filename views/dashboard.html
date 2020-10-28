@@ -1,26 +1,57 @@
 {% extends "LAYOUT2.html" %}
 {% block body %}
-
+<h1 id=json_headlines>{{response}}</h1>
 <section>
 
 </section>
 
 <script>
   const section = document.querySelector('section');
-
-  let requestURL = 'https://raw.githubusercontent.com/achrysaetos/project_news_file_hosting/master/ap.json';
-  let request = new XMLHttpRequest();
-  request.open('GET', requestURL);
-  request.responseType = 'json';
-  request.send();
-
-  request.onload = function () {
-    const apHeadlines = request.response;
-    showAp(apHeadlines);
-  }
+  //const apHeadlines = document.getElementById("json_headlines").innerHTML;
+  const apHeadlines = 
+{
+  status: 'ok',
+  totalResults: 3,
+  articles: [
+    {
+      source: [Object],
+      author: 'Caroline Kelly',
+      title: 'White House lists ending Covid-19 pandemic as an accomplishment despite cases spiking to record levels - CNN',
+      description: "The White House included ending the coronavirus pandemic on a list of the Trump administration's science and technology accomplishments, despite nearly half a million Americans tested positive for Covid-19 in just the last week.",
+      url: 'https://www.cnn.com/2020/10/27/politics/white-house-ending-covid-19-pandemic-accomplishment-record-cases-spike/index.html',
+      urlToImage: 'https://cdn.cnn.com/cnnnext/dam/assets/201027121111-donald-trump-file-super-tease.jpg',
+      publishedAt: '2020-10-28T01:31:00Z',
+      content: "(CNN)The White House included ending the coronavirus pandemic on a list of the Trump administration's science and technology accomplishments, despite nearly half a million Americans tested positive f… [+2750 chars]"
+    },
+    {
+      source: [Object],
+      author: 'Daniel Dale, CNN',
+      title: 'Fact check: Trump campaign deceptively snips video of Biden quoting the Pope - CNN',
+      description: `The Trump campaign's "war room" Twitter account has been serially dishonest, repeatedly taking quotes from former Vice President Joe Biden and other Democrats out of context.`,
+      url: 'https://www.cnn.com/2020/10/27/politics/fact-check-biden-pope-francis-trump-war-room/index.html',
+      urlToImage: 'https://cdn.cnn.com/cnnnext/dam/assets/201027143937-03-biden-ga-1027-super-tease.jpg',
+      publishedAt: '2020-10-28T00:19:14Z',
+      content: `Washington (CNN)The Trump campaign's "war room" Twitter account has beenseriallydishonest, repeatedly taking quotes from former Vice President Joe Biden and other Democrats out of context.\r\n` +
+        'The accou… [+1974 chars]'
+    },
+    {
+      source: [Object],
+      author: '',
+      title: 'E. Jean Carroll Suit Against Trump To Proceed After Judge Rules Against DOJ - NPR',
+      description: 'A federal judge says the government may not substitute itself for President Trump as the defendant in the matter and accordingly neutralize the case. So the suit against the president can proceed.',
+      url: 'https://www.npr.org/2020/10/27/928210061/judge-rules-against-trump-doj-bid-that-might-have-quashed-defamation-suit',
+      urlToImage: 'https://media.npr.org/assets/img/2020/10/27/ap_20295746031830_wide-dbfd90abdc472fbef0e6340f8118dcd3ad7bf593.jpg?s=1400',
+      publishedAt: '2020-10-27T16:49:00Z',
+      content: 'E. Jean Carroll (left), who has accused President Trump of raping her in the 1990s, leaves federal court in New York City after a hearing last week in her defamation lawsuit.\r\n' +
+        'John Minchillo/AP\r\n' +
+        'A fe… [+3109 chars]'
+    }
+  ]
+};
+  showAp(apHeadlines);
 
   function showAp(jsonObj) {
-    const headlines = jsonObj;
+    const headlines = jsonObj['articles'];
 
     for (let i = 0; i < headlines.length; i++) {
       const myArticle = document.createElement('article');
@@ -31,8 +62,8 @@
 
       myH2.textContent = headlines[i].title;
       myPara1.textContent = headlines[i].author;
-      myPara2.textContent = headlines[i].date;
-      myPara3.textContent = headlines[i].content;
+      myPara2.textContent = headlines[i].publishedAt;
+      myPara3.textContent = headlines[i].description;
 
       myArticle.appendChild(myH2);
       myArticle.appendChild(myPara1);

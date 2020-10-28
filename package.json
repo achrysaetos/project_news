@@ -23,6 +23,7 @@
     "helmet": "^3.22.0",
     "mongoose": "^5.10.5",
     "morgan": "~1.9.1",
+    "newsapi": "^2.4.1",
     "stripe": "^8.96.0",
     "swig": "^1.4.2",
     "xmlhttprequest": "^1.8.0"

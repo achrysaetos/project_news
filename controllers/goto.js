@@ -7,6 +7,9 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//in order to get 
 
 var User = require("../models/user");
 
+const NewsAPI = require('newsapi');
+const { response } = require("express");
+const newsapi = new NewsAPI('c1e02f8b32c3415891568b238ca39984');
 /*-------------------------------------------------------------------------------------------------*/
 
 exports.home = function (req, res) {
@@ -31,7 +34,15 @@ exports.dashboard = function (req, res) {
     if (!req.session.userID) {
         res.redirect("login");
     } else {
-        res.render("dashboard");
+        newsapi.v2.topHeadlines({
+            q: 'trump',
+            language: 'en',
+            country: 'us'
+        }).then(response => {
+            response = response
+            console.log(response)
+        });
+        res.render("dashboard", { response: response });
     }
 };
 exports.logout = function (req, res) {
@@ -54,15 +65,15 @@ exports.login_post = async (req, res) => {
         });
 
         if (!user) {
-            var message= "User does not exist.";
-            return res.render("login", {message: message});
+            var message = "User does not exist.";
+            return res.render("login", { message: message });
         }
 
         const isMatch = await bcrypt.compare(pword, user.pword);
 
         if (!isMatch) {
-            var message= "Incorrect password.";
-            return res.render("login", {message: message});
+            var message = "Incorrect password.";
+            return res.render("login", { message: message });
         }
 
         req.session.userID = user.uname;
@@ -92,8 +103,8 @@ exports.signup_post = async (req, res) => {
         });
 
         if (user) {
-            var message= "User already exists.";
-            return res.render("signup", {message: message});
+            var message = "User already exists.";
+            return res.render("signup", { message: message });
         }
 
         user = new User({ uname, fname, lname, pword });
