@@ -7,9 +7,6 @@ var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;//in order to get 
 
 var User = require("../models/user");
 
-const NewsAPI = require('newsapi');
-const { response } = require("express");
-const newsapi = new NewsAPI('c1e02f8b32c3415891568b238ca39984');
 /*-------------------------------------------------------------------------------------------------*/
 
 exports.home = function (req, res) {
@@ -34,15 +31,7 @@ exports.dashboard = function (req, res) {
     if (!req.session.userID) {
         res.redirect("login");
     } else {
-        newsapi.v2.topHeadlines({
-            q: 'trump',
-            language: 'en',
-            country: 'us'
-        }).then(response => {
-            response = response
-            console.log(response)
-        });
-        res.render("dashboard", { response: response });
+        res.render("dashboard");
     }
 };
 exports.logout = function (req, res) {
