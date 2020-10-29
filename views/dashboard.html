@@ -1,6 +1,14 @@
 {% extends "LAYOUT2.html" %}
 {% block body %}
 
+<form action="/dashboard" method="get" style="float:center" class="loginmodal" autocomplete="off">
+  <div style="text-align: center;">
+    <input type="text" placeholder="Follow a celebrity!" name="quotesymbol" id="celebrity" required>
+    <button class="quote">Follow</button>
+  </div>
+
+</form>
+
 <section>
 
 </section>
@@ -8,38 +16,47 @@
 <script>
 
   const section = document.querySelector('section');
-  let requestURL = 'https://newsapi.org/v2/everything?language=en&q="sacha baron cohen"&apiKey=c1e02f8b32c3415891568b238ca39984';
-  let request = new XMLHttpRequest();
-  request.open('GET', requestURL);
-  request.responseType = 'json';
-  request.send();
+  var celebrity = document.getElementById("celebrity").value
+  console.log(celebrity)
+  let requestURLs = [
+    'https://newsapi.org/v2/everything?language=en&qInTitle="romee strijd"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
+    'https://newsapi.org/v2/everything?language=en&qInTitle="gordon ramsay"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
+    'https://newsapi.org/v2/everything?language=en&qInTitle="taylor swift"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984'
+  ];
 
-  request.onload = function () {
-    const apHeadlines = request.response;
-    showAp(apHeadlines);
-  }
+  for (let url_index = 0; url_index < requestURLs.length; url_index++) {
+    let request = new XMLHttpRequest();
+    request.open('GET', requestURLs[url_index]);
+    request.responseType = 'json';
+    request.send();
 
-  function showAp(jsonObj) {
-    const headlines = jsonObj['articles'];
+    request.onload = function () {
+      const apHeadlines = request.response;
+      showAp(apHeadlines);
+    }
 
-    for (let i = 0; i < headlines.length; i++) {
-      const myArticle = document.createElement('article');
-      const myH2 = document.createElement('h2');
-      const myPara1 = document.createElement('p');
-      const myPara2 = document.createElement('p');
-      const myPara3 = document.createElement('p');
+    function showAp(jsonObj) {
+      const headlines = jsonObj['articles'];
 
-      myH2.textContent = headlines[i].title;
-      myPara1.textContent = headlines[i].source['name'];
-      myPara2.textContent = Date(headlines[i].publishedAt);
-      myPara3.textContent = headlines[i].description;
+      for (let i = 0; i < headlines.length; i++) {
+        const myArticle = document.createElement('article');
+        const myH2 = document.createElement('h2');
+        const myPara1 = document.createElement('p');
+        const myPara2 = document.createElement('p');
+        const myPara3 = document.createElement('p');
 
-      myArticle.appendChild(myH2);
-      myArticle.appendChild(myPara1);
-      myArticle.appendChild(myPara2);
-      myArticle.appendChild(myPara3);
+        myH2.textContent = headlines[i].title;
+        myPara1.textContent = headlines[i].source['name'];
+        myPara2.textContent = headlines[i].publishedAt;
+        myPara3.textContent = headlines[i].description;
 
-      section.appendChild(myArticle);
+        myArticle.appendChild(myH2);
+        myArticle.appendChild(myPara1);
+        myArticle.appendChild(myPara2);
+        myArticle.appendChild(myPara3);
+
+        section.appendChild(myArticle);
+      }
     }
   }
 
