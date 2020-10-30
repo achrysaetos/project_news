@@ -1,13 +1,7 @@
 {% extends "LAYOUT2.html" %}
 {% block body %}
 
-<form action="/dashboard" method="get" style="float:center" class="loginmodal" autocomplete="off">
-  <div style="text-align: center;">
-    <input type="text" placeholder="Follow a celebrity!" name="quotesymbol" id="celebrity" required>
-    <button class="quote">Follow</button>
-  </div>
-
-</form>
+<div class="modalhead"> Top Headlines and Latest Updates </div>
 
 <section>
 
@@ -16,11 +10,9 @@
 <script>
 
   const section = document.querySelector('section');
-  var celebrity = document.getElementById("celebrity").value
-  console.log(celebrity)
   let requestURLs = [
-    'https://newsapi.org/v2/everything?language=en&qInTitle="romee strijd"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
     'https://newsapi.org/v2/everything?language=en&qInTitle="gordon ramsay"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
+    'https://newsapi.org/v2/everything?language=en&qInTitle="romee strijd"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
     'https://newsapi.org/v2/everything?language=en&qInTitle="taylor swift"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984'
   ];
 

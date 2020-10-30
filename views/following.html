@@ -1,0 +1,16 @@
+{% extends "LAYOUT2.html" %}
+{% block body %}
+
+<div class="modalhead"> Followed Celebrities </div>
+
+<form action="/dashboard" method="get" style="float:center" class="loginmodal" autocomplete="off">
+  <div style="text-align: center;">
+    <input type="text" placeholder="Follow a celebrity!" name="quotesymbol" id="celebrity" required>
+    <button class="cancel">Unfollow</button>
+    <button class="quote">Follow</button>
+  </div>
+</form>
+
+<h4>You are currently following: </h4>
+
+{% endblock %}

@@ -17,4 +17,6 @@ router.post("/logout", goto.logout);
 router.get("/dashboard", goto.dashboard);
 router.get("/logout", goto.logout);
 
+router.get("/following", goto.following);
+
 module.exports = router;

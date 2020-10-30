@@ -43,7 +43,11 @@ exports.logout = function (req, res) {
         res.redirect("login");
     });
 };
-
+exports.following = (req, res) => {
+    if (!req.session.userID)
+        res.redirect("login");
+    res.render("following");
+}
 /*-------------------------------------------------------------------------------------------------*/
 
 exports.login_post = async (req, res) => {
