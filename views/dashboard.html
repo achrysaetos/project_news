@@ -10,11 +10,20 @@
 <script>
 
   const section = document.querySelector('section');
-  let requestURLs = [
-    'https://newsapi.org/v2/everything?language=en&qInTitle="gordon ramsay"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
-    'https://newsapi.org/v2/everything?language=en&qInTitle="romee strijd"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984',
-    'https://newsapi.org/v2/everything?language=en&qInTitle="taylor swift"&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984'
-  ];
+  var mycelebs = shuffle("{{mycelebs}}".split(","));
+
+  function shuffle(a) {
+    for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  var requestURLs = [];
+  for (let i = 0; i < mycelebs.length; i++){
+    requestURLs.push("https://newsapi.org/v2/everything?language=en&qInTitle=" + '"' + mycelebs[i] + '"' + "&pageSize=3&apiKey=c1e02f8b32c3415891568b238ca39984");
+  }
 
   for (let url_index = 0; url_index < requestURLs.length; url_index++) {
     let request = new XMLHttpRequest();

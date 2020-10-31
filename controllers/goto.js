@@ -27,12 +27,16 @@ exports.login = function (req, res) {
 
 /*-------------------------------------------------------------------------------------------------*/
 
-exports.dashboard = function (req, res) {
+exports.dashboard = async (req, res) => {
     if (!req.session.userID) {
         res.redirect("login");
-    } else {
-        res.render("dashboard");
     }
+    var user = req.session.userID;
+    let userjson = await User.findOne({
+        uname: user
+    });
+    var mycelebs = userjson.celebs;
+    res.render("dashboard", { mycelebs: mycelebs });
 };
 exports.logout = function (req, res) {
     req.session.destroy(err => {
@@ -43,11 +47,30 @@ exports.logout = function (req, res) {
         res.redirect("login");
     });
 };
-exports.following = (req, res) => {
+exports.following = async (req, res) => {
     if (!req.session.userID)
         res.redirect("login");
-    res.render("following");
+    var user = req.session.userID;
+    let userjson = await User.findOne({
+        uname: user
+    });
+    var mycelebs = userjson.celebs;
+    res.render("following", {mycelebs:mycelebs});
 }
+exports.following_post = async (req, res) => {
+    if (!req.session.userID)
+        res.redirect("login");
+    var user = req.session.userID;
+    let userjson = await User.findOne({
+        uname: user
+    });
+    await User.updateOne(
+        { "uname": userjson.uname },
+        {$set: { "celebs": userjson.celebs.concat([req.body.celebname]) }}
+    );
+    res.redirect("following");
+}
+
 /*-------------------------------------------------------------------------------------------------*/
 
 exports.login_post = async (req, res) => {
@@ -70,14 +93,6 @@ exports.login_post = async (req, res) => {
         }
 
         req.session.userID = user.uname;
-        try {
-            let endowmenthelper = await Portfolio_current.findOne({
-                client: uname
-            });
-            endowment = endowmenthelper.totalCash;
-        } catch {
-            endowment = 10000;
-        }
         await res.redirect("dashboard");
 
     } catch (e) {
@@ -90,6 +105,7 @@ exports.login_post = async (req, res) => {
 
 exports.signup_post = async (req, res) => {
     const { uname, fname, lname, pword } = req.body;
+    const celebs = []
     try {
         let user = await User.findOne({
             uname
@@ -100,7 +116,7 @@ exports.signup_post = async (req, res) => {
             return res.render("signup", { message: message });
         }
 
-        user = new User({ uname, fname, lname, pword });
+        user = new User({ uname, fname, lname, pword, celebs });
 
         const salt = await bcrypt.genSalt(10);
         user.pword = await bcrypt.hash(pword, salt);
