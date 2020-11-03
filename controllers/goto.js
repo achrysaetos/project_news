@@ -64,10 +64,25 @@ exports.following_post = async (req, res) => {
     let userjson = await User.findOne({
         uname: user
     });
-    await User.updateOne(
-        { "uname": userjson.uname },
-        {$set: { "celebs": userjson.celebs.concat([req.body.celebname]) }}
-    );
+    var action = req.body.action
+    if (action == "follow"){
+        if (!userjson.celebs.includes(req.body.celebname)){
+            await User.updateOne(
+                { "uname": userjson.uname },
+                {$set: { "celebs": userjson.celebs.concat([req.body.celebname]) }}
+            );
+        }
+    }
+    else if (action == "unfollow"){
+        var index = userjson.celebs.indexOf(req.body.celebname);
+        if (index > -1){
+            userjson.celebs.splice(index, 1);
+            await User.updateOne(
+                { "uname": userjson.uname },
+                {$set: { "celebs": userjson.celebs }}
+            );
+        }
+    }
     res.redirect("following");
 }
 

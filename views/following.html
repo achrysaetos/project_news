@@ -5,9 +5,9 @@
 
 <form action="/following" method="post" style="float:center" class="loginmodal" autocomplete="off">
   <div style="text-align: center;">
-    <input type="text" placeholder="Follow a celebrity!" name="celebname" required>
-    <button class="cancel">Unfollow</button>
-    <button class="quote">Follow</button>
+    <input type="text" placeholder="Follow a celebrity!" name="celebname" autofocus required>
+    <button class="quote" name="action" value="follow">Follow</button>
+    <button class="cancel" name="action" value="unfollow">Unfollow</button>
   </div>
 </form>
 
