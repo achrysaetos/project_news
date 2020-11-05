@@ -3,7 +3,7 @@ More importantly, new topics will appeal to users arbitrarily as a sign of the t
 And finally, numerous news sources have already invested millions of dollars in terrific vetting algorithms.
 This is why we cannot do an ordinary, general news app.
 
-Celebrity news aggregator.
+Celebrity news aggregator. Done!
 Using html, css, node, and express.
 Do not forget to remove your database url and api keys.
 
