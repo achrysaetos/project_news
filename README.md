@@ -1,6 +1,6 @@
 # Project News
 
-Celebrity news aggregator, built using html, css, node, and express.
+A celebrity news aggregator for receiving the most recent celebrity headlines, using Node.js, MongoDB, and News API.
 
 *Don't forget to add your database url and api keys.*
 
