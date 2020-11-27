@@ -24,4 +24,4 @@ A celebrity news aggregator for receiving the most recent celebrity headlines, b
 * It's very grueling for users to have to pick specific tags for their news.
 * More importantly, new topics will appeal to users arbitrarily as a sign of the times.
 * And finally, numerous news sources have already invested millions of dollars in terrific vetting algorithms.
-* This is why we cannot do an ordinary, general news app.
+* *This is why we cannot do an ordinary, general news app.*
